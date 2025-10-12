@@ -1,0 +1,96 @@
+{
+  "name": "Doc to ChatGPT Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": "YOUR_GOOGLE_DOC_ID"
+      },
+      "name": "Google Docs - Get Document",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YOUR_GOOGLE_DOCS_CREDENTIAL_ID",
+          "name": "Google Docs OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a productivity assistant. Turn meeting notes into a checklist of action items."
+          },
+          {
+            "role": "user",
+            "content": "Here are the meeting notes:\n{{$node[\"Google Docs - Get Document\"].json.body}}"
+          }
+        ]
+      },
+      "name": "ChatGPT - Generate Tasks",
+      "type": "n8n-nodes-base.openai",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ],
+      "credentials": {
+        "openAIApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toNumber": "whatsapp:+1234567890",
+        "text": "Action items from meeting:\n{{$node[\"ChatGPT - Generate Tasks\"].json.choices[0].message.content}}"
+      },
+      "name": "WhatsApp - Send Tasks",
+      "type": "n8n-nodes-base.twilioSendWhatsApp",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "YOUR_TWILIO_CREDENTIAL_ID",
+          "name": "Twilio API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Google Docs - Get Document": {
+      "main": [
+        [
+          {
+            "node": "ChatGPT - Generate Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatGPT - Generate Tasks": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Send Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {}
+}
