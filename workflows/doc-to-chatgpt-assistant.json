@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {
-        "documentId": "YOUR_GOOGLE_DOC_ID"
+        "documentId": "92h749h29d104u19203r837"
       },
       "name": "Google Docs - Get Document",
       "type": "n8n-nodes-base.googleDocs",
