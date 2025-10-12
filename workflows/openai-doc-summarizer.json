@@ -1,0 +1,99 @@
+{
+  "name": "OpenAI Doc Summarizer",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": "={{$node[\"Google Docs Get Document\"].json.documentId}}"
+      },
+      "name": "Google Docs Get Document",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YOUR_GOOGLE_DOCS_CREDENTIAL_ID",
+          "name": "Google Docs OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant that summarizes documents."
+          },
+          {
+            "role": "user",
+            "content": "Summarize this text:\n{{$node[\"Google Docs Get Document\"].json.body}}"
+          }
+        ]
+      },
+      "name": "OpenAI Summarization",
+      "type": "n8n-nodes-base.openai",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ],
+      "credentials": {
+        "openAIApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toNumber": "whatsapp:+1234567890",
+        "text": "Summary:\n{{$node[\"OpenAI Summarization\"].json.choices[0].message.content}}"
+      },
+      "name": "Send WhatsApp Message",
+      "type": "n8n-nodes-base.twilioSendWhatsApp",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "YOUR_TWILIO_CREDENTIAL_ID",
+          "name": "Twilio API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Google Docs Get Document": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Summarization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Summarization": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "saveDataError": "none",
+    "saveDataSuccess": "all"
+  }
+}

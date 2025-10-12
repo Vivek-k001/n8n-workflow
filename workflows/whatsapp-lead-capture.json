@@ -1,0 +1,94 @@
+{
+  "name": "WhatsApp Lead Capture",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-webhook",
+        "responseMode": "onReceived",
+        "responseData": "={{ { status: 'received' } }}"
+      },
+      "name": "Webhook (WhatsApp)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "from",
+              "value": "={{$node[\"Webhook (WhatsApp)\"].json.From}}"
+            },
+            {
+              "name": "message",
+              "value": "={{$node[\"Webhook (WhatsApp)\"].json.Body}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set Lead Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "documentId": "YOUR_GOOGLE_DOC_ID",
+        "path": "",
+        "value": "From: {{$node[\"Set Lead Data\"].json.from}}, Message: {{$node[\"Set Lead Data\"].json.message}}"
+      },
+      "name": "Google Docs Append",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YOUR_GOOGLE_DOCS_CREDENTIAL_ID",
+          "name": "Google Docs OAuth2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook (WhatsApp)": {
+      "main": [
+        [
+          {
+            "node": "Set Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Google Docs Append",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "saveDataError": "none",
+    "saveDataSuccess": "all"
+  }
+}
