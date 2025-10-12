@@ -25,7 +25,7 @@
               "value": "={{$node[\"Webhook (WhatsApp)\"].json.From}}"
             },
             {
-              "name": "message",
+              "name": "name2",
               "value": "={{$node[\"Webhook (WhatsApp)\"].json.Body}}"
             }
           ]
