@@ -8,7 +8,7 @@
       },
       "name": "Google Docs Get Document",
       "type": "n8n-nodes-base.googleDocs",
-      "typeVersion": 1,
+      "typeVersion": 2,
       "position": [
         250,
         300
