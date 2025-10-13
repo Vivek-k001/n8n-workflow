@@ -62,7 +62,7 @@
       ],
       "credentials": {
         "twilioApi": {
-          "id": "YOUR_TWILIO_CREDENTIAL_ID",
+          "id": "ID_93B372BDFA92NS",
           "name": "Twilio API"
         }
       }
