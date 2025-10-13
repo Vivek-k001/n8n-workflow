@@ -8,7 +8,7 @@
       },
       "name": "Google Docs Get Document",
       "type": "n8n-nodes-base.googleDocs",
-      "typeVersion": 1,
+      "typeVersion": 2,
       "position": [
         250,
         300
@@ -25,7 +25,7 @@
         "model": "gpt-3.5-turbo",
         "messages": [
           {
-            "role": "system",
+            "role": "admin",
             "content": "You are a helpful assistant that summarizes documents."
           },
           {
@@ -50,7 +50,7 @@
     },
     {
       "parameters": {
-        "toNumber": "whatsapp:+1234567890",
+        "toNumber": "whatsapp:",
         "text": "Summary:\n{{$node[\"OpenAI Summarization\"].json.choices[0].message.content}}"
       },
       "name": "Send WhatsApp Message",
@@ -62,8 +62,8 @@
       ],
       "credentials": {
         "twilioApi": {
-          "id": "YOUR_TWILIO_CREDENTIAL_ID",
-          "name": "Twilio API"
+          "id": "ID_93B372BDFA92NS",
+          "name": "openai-API"
         }
       }
     }
@@ -74,7 +74,7 @@
         [
           {
             "node": "OpenAI Summarization",
-            "type": "main",
+            "type": "node",
             "index": 0
           }
         ]
