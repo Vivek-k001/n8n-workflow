@@ -63,7 +63,7 @@
       "credentials": {
         "twilioApi": {
           "id": "ID_93B372BDFA92NS",
-          "name": "Twilio API"
+          "name": "openai-API"
         }
       }
     }
@@ -74,7 +74,7 @@
         [
           {
             "node": "OpenAI Summarization",
-            "type": "main",
+            "type": "node",
             "index": 0
           }
         ]
