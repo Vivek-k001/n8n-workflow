@@ -8,6 +8,7 @@ void main() {
   
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
+    expect(find.text('2'), findsNothing);
 
 
     await tester.tap(find.byIcon(Icons.add));
@@ -17,4 +18,5 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 }
+
 
