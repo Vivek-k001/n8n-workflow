@@ -15,8 +15,8 @@
       ],
       "credentials": {
         "googleDocsOAuth2Api": {
-          "id": "92791635285027362733",
-          "name": "Google Docs OAuth2"
+          "id": "927916352850273627333",
+          "name": "G8oogle Docs OAuth2"
         }
       }
     },
@@ -43,7 +43,7 @@
       ],
       "credentials": {
         "openAIApi": {
-          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "id": "2b473b292b393h4b383473b3",
           "name": "OpenAI API"
         }
       }
